@@ -1,0 +1,105 @@
+﻿<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart - Apple Shop</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="cart-page">
+    <header class="header">
+        <div class="container">
+            <nav class="header__nav">
+                <div class="logo" onclick="location.href='index.html'">APPLE<span>SHOP</span></div>
+                <div class="header__controls" style="margin-left:auto;">
+                    <button id="themeToggle" title="Сменить тему">🌓</button>
+                    <span style="position:relative;">
+                        <button id="visionToggle" title="Версия для слабовидящих">👁</button>
+                        <div id="accessPanel" class="access-panel">
+                            <button class="access-close" onclick="accessibilityModule.togglePanel()">&times;</button>
+                            <h4>Режим для слабовидящих</h4>
+                            <div class="access-group">
+                                <label>Цветовая схема</label>
+                                <div class="btn-group">
+                                    <button data-access-mode="" onclick="accessibilityModule.setMode('')">Обычная</button>
+                                    <button data-access-mode="bw" onclick="accessibilityModule.setMode('bw')">Ч/б</button>
+                                    <button data-access-mode="wb" onclick="accessibilityModule.setMode('wb')">Белый на чёрном</button>
+                                    <button data-access-mode="mono" onclick="accessibilityModule.setMode('mono')">Монохром</button>
+                                </div>
+                            </div>
+                            <div class="access-group">
+                                <label>Размер шрифта</label>
+                                <div class="btn-group">
+                                    <button data-font-opt="normal" onclick="accessibilityModule.setFontSize('normal')">Обычный</button>
+                                    <button data-font-opt="large" onclick="accessibilityModule.setFontSize('large')">Крупный</button>
+                                    <button data-font-opt="xlarge" onclick="accessibilityModule.setFontSize('xlarge')">Очень крупный</button>
+                                </div>
+                            </div>
+                            <div class="access-group">
+                                <label class="toggle-row">
+                                    <input type="checkbox" id="accessNoImg" onchange="accessibilityModule.toggleImages()">
+                                    Отключить изображения
+                                </label>
+                            </div>
+                            <div class="access-group">
+                                <label class="toggle-row">
+                                    <input type="checkbox" id="accessNoAnim" onchange="accessibilityModule.toggleAnim()">
+                                    Отключить анимацию
+                                </label>
+                            </div>
+                        </div>
+                    </span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <nav class="breadcrumbs">
+            <a href="index.html">Home</a> <span>❯</span> Cart
+        </nav>
+
+        <h1 class="page-title">Ваша корзина</h1>
+
+        <div class="cart-grid">
+            <div class="cart-items-list" id="fullCartList">
+            </div>
+
+            <aside class="order-summary">
+                <h2>Сттоимость заказа</h2>
+                <div class="summary-row">
+                    <span>Сумма</span>
+                    <span id="subtotalPrice">$0</span>
+                </div>
+                <div class="summary-row discount">
+                    <span>Скидка</span>
+                    <span id="discountPrice">-$0</span>
+                </div>
+                <div class="summary-row">
+                    <span>Цена доставки</span>
+                    <span id="deliveryFee">$15</span>
+                </div>
+                <hr>
+                <div class="summary-row total">
+                    <span>В общем</span>
+                    <span id="finalTotalPrice">$0</span>
+                </div>
+
+                <div class="promo-code-container">
+                    <div class="promo-input-wrapper">
+                        <span class="icon">🏷️</span>
+                        <input type="text" id="promoInput" placeholder="Вставьте промокод">
+                    </div>
+                    <button class="btn-black" onclick="cartModule.applyPromo()">Применить</button>
+                </div>
+
+                <button class="btn-black btn-checkout" onclick="cartModule.checkout()">
+                    К оплате <span>➔</span>
+                </button>
+            </aside>
+        </div>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>

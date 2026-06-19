@@ -1,0 +1,217 @@
+﻿<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apple Store - Магазин изделий из яблок</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <nav class="header__nav">
+                <div class="logo">APPLE<span>SHOP</span></div>
+                <div class="search-bar">
+                    <input type="text" id="globalSearch" placeholder="Найти яблоки...">
+                </div>
+                <div class="header__controls">
+                    <button id="themeToggle" title="Сменить тему">🌓</button>
+                    <span style="position:relative;">
+                        <button id="visionToggle" title="Версия для слабовидящих">👁</button>
+                        <div id="accessPanel" class="access-panel">
+                            <button class="access-close" onclick="accessibilityModule.togglePanel()">&times;</button>
+                            <h4>Режим для слабовидящих</h4>
+                            <div class="access-group">
+                                <label>Цветовая схема</label>
+                                <div class="btn-group">
+                                    <button data-access-mode="" onclick="accessibilityModule.setMode('')">Обычная</button>
+                                    <button data-access-mode="bw" onclick="accessibilityModule.setMode('bw')">Ч/б</button>
+                                    <button data-access-mode="wb" onclick="accessibilityModule.setMode('wb')">Белый на чёрном</button>
+                                    <button data-access-mode="mono" onclick="accessibilityModule.setMode('mono')">Монохром</button>
+                                </div>
+                            </div>
+                            <div class="access-group">
+                                <label>Размер шрифта</label>
+                                <div class="btn-group">
+                                    <button data-font-opt="normal" onclick="accessibilityModule.setFontSize('normal')">Обычный</button>
+                                    <button data-font-opt="large" onclick="accessibilityModule.setFontSize('large')">Крупный</button>
+                                    <button data-font-opt="xlarge" onclick="accessibilityModule.setFontSize('xlarge')">Очень крупный</button>
+                                </div>
+                            </div>
+                            <div class="access-group">
+                                <label class="toggle-row">
+                                    <input type="checkbox" id="accessNoImg" onchange="accessibilityModule.toggleImages()">
+                                    Отключить изображения
+                                </label>
+                            </div>
+                            <div class="access-group">
+                                <label class="toggle-row">
+                                    <input type="checkbox" id="accessNoAnim" onchange="accessibilityModule.toggleAnim()">
+                                    Отключить анимацию
+                                </label>
+                            </div>
+                        </div>
+                    </span>
+                    <a href="cart.html" class="nav-link">Корзина (<span id="cartCount">0</span>)</a>
+                    <a href="#favorites" class="nav-link">Избранное</a>
+                    <a href="#profile" id="authBtn" class="nav-link">Войти</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main id="app">
+        <section id="promo-section" class="promo-slider">
+            <div class="slider-container" id="sliderTrack">
+            </div>
+            <button class="slider-btn prev" id="prevSlide">❮</button>
+            <button class="slider-btn next" id="nextSlide">❯</button>
+        </section>
+
+        <section class="container popular-section" style="margin-bottom: 40px; overflow: hidden; position: relative;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h2 style="font-size: 24px; font-weight: 800; margin: 0;">Популярные товары</h2>
+                <div style="display: flex; gap: 8px;">
+                    <div class="popular-swiper-btn-prev" style="background: var(--header-bg); border: 1px solid var(--border-color); color: var(--text-color); width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 14px; transition: opacity 0.2s; user-select: none; z-index: 10;">❮</div>
+                    <div class="popular-swiper-btn-next" style="background: var(--header-bg); border: 1px solid var(--border-color); color: var(--text-color); width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 14px; transition: opacity 0.2s; user-select: none; z-index: 10;">❯</div>
+                </div>
+            </div>
+            <div class="swiper popularSwiper" style="width: 100%; overflow: hidden;">
+                <div class="swiper-wrapper" id="popularSliderTrack">
+                </div>
+            </div>
+        </section>
+        <section class="catalog-container container">
+            <aside class="filters" id="filtersBlock">
+                <div class="filter-header">
+                    <h3>Фильтры</h3>
+                    <span class="icon-settings">⚙️</span>
+                </div>
+                <div class="filter-section">
+                    <div class="section-title" onclick="toggleFilterSection(this)">
+                        Сортировать <span class="arrow">˄</span>
+                    </div>
+                    <div class="filter-content">
+                        <ul class="category-list" id="sortList">
+                            <li class="active" onclick="setSortValue('popular', this)">Наиболее популярные <span>❯</span></li>
+                            <li onclick="setSortValue('lowPrice', this)">Цена: от Низкой к Высокой <span>❯</span></li>
+                            <li onclick="setSortValue('highPrice', this)">Цена: от Высокой к Низкой <span>❯</span></li>
+                            <li onclick="setSortValue('rating', this)">По популярности<span>❯</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="filter-section">
+                    <div class="section-title" onclick="toggleFilterSection(this)">
+                        Цена <span class="arrow">˄</span>
+                    </div>
+                    <div class="filter-content">
+                        <div class="dual-range">
+                            <div class="dual-range-track"></div>
+                            <div class="dual-range-fill" id="rangeFill"></div>
+                            <input type="range" id="filterPriceMin" min="0" max="1000" step="10" value="0">
+                            <input type="range" id="filterPrice" min="0" max="1000" step="10" value="1000">
+                        </div>
+                        <div class="price-labels">
+                            <span id="priceMinVal">0</span>
+                            <span id="priceVal">1000</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="filter-section">
+                    <div class="section-title" onclick="toggleFilterSection(this)">
+                        Цвета <span class="arrow">˄</span>
+                    </div>
+                    <div class="filter-content">
+                        <div class="color-swatches">
+                            <div class="swatch" style="background: #2ecc71;" title="Зеленое" onclick="setFilterValue('search', 'Зеленое', this)"></div>
+                            <div class="swatch" style="background: #e74c3c;" title="Красное" onclick="setFilterValue('search', 'Красное', this)"></div>
+                            <div class="swatch" style="background: #f1c40f;" title="Желтое" onclick="setFilterValue('search', 'Желтое', this)"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="filter-section">
+                    <div class="section-title" onclick="toggleFilterSection(this)">
+                        Размер пакета <span class="arrow">˄</span>
+                    </div>
+                    <div class="filter-content">
+                        <div class="size-pills">
+                            <div class="pill" onclick="setFilterValue('search', 'S', this)">Малый</div>
+                            <div class="pill active" onclick="setFilterValue('search', 'M', this)">Средний</div>
+                            <div class="pill" onclick="setFilterValue('search', 'L', this)">Большой</div>
+                            <div class="pill" onclick="setFilterValue('search', 'Box', this)">Очень большой</div>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn-apply" onclick="catalogModule.render()">Применить фильтры</button>
+                <button class="btn-reset" onclick="resetFilters()">Сбросить фильтры</button>
+
+            </aside>
+
+            <div class="catalog-content">
+                <div id="productGrid" class="grid"></div>
+                <div id="pagination" class="pagination-container"></div>
+            </div>
+        </section>
+
+        <section class="container recent-viewed">
+            <h3>Вы недавно смотрели</h3>
+            <div id="recentGrid" class="grid"></div>
+        </section>
+        <div class="loader">Загрузка...</div>
+
+        <section id="profile-section" class="container" style="display: none;">
+            <div class="profile-layout">
+                <aside class="profile-nav">
+                    <button onclick="profileModule.switchTab('info')" class="tab-btn active">Мои данные</button>
+                    <button onclick="profileModule.switchTab('orders')" class="tab-btn">Заказы</button>
+                    <button onclick="profileModule.switchTab('favs')" class="tab-btn">Избранное</button>
+                    <button onclick="profileModule.switchTab('reviews')" class="tab-btn">Мои отзывы</button>
+                    <button onclick="profileModule.switchTab('promos')" class="tab-btn">Ваши акции</button>
+                    <button onclick="profileModule.switchTab('game')" class="tab-btn">Игра: Собери яблоки</button>
+                </aside>
+                <div class="profile-content" id="profileTabContent">
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Apple Shop.</p>
+        </div>
+    </footer>
+
+    <div id="authModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeAuth">&times;</span>
+            <div id="authForms">
+            </div>
+        </div>
+    </div>
+    <div id="productModal" class="modal">
+        <div class="modal-content modal-large">
+            <span class="close-modal" onclick="closeModal('productModal')">&times;</span>
+            <div id="productDetailContent" class="product-detail"></div>
+        </div>
+    </div>
+
+    <div id="cartModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('cartModal')">&times;</span>
+            <h2>Ваша корзина</h2>
+            <div id="cartList"></div>
+            <div class="cart-total" id="cartTotalBlock">
+                <p>Итого: <span id="totalPrice">0</span>₽</p>
+                <button class="btn-primary" onclick="cartModule.checkout()">Оформить заказ</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
